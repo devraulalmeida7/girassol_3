@@ -65,6 +65,33 @@
     to   { opacity: 1; transform: translateY(0) scale(1); }
   }
 
+/* ===== Fundo da página 3 ===== */
+#page3 {
+  position: relative;
+  overflow: hidden;
+  background-image: url('./raul_yasmin.jpeg'); /* 👈 troque aqui */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Overlay escuro pra o texto ficar legível */
+#page3::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(92, 0, 17, 0.55),
+    rgba(92, 0, 17, 0.75)
+  );
+  z-index: 0;
+}
+
+/* Garante que o conteúdo fique acima do overlay */
+#page3 > * {
+  position: relative;
+  z-index: 1;
+}
   h1 {
     font-family: 'Great Vibes', cursive;
     font-size: clamp(2.2rem, 8vw, 4.5rem);
@@ -144,6 +171,7 @@
 </style>
 </head>
 <body>
+    <audio src="./Top-Gun-Take-My-Breath-Away-Berlin.mp3" autoplay id="bgMusic"></audio>
 
   <!-- Página 1 -->
   <section class="page active" id="page1">
@@ -228,6 +256,23 @@
     heart.style.animationDelay = Math.random() * 8 + 's';
     heart.style.fontSize = (1.2 + Math.random() * 1.8) + 'rem';
     document.body.appendChild(heart);
+
+
+    /* ===== Música de fundo ===== */
+const music = document.getElementById('bgMusic');
+music.volume = 0.35; // volume suave (0 a 1)
+
+// Tenta tocar ao carregar (alguns navegadores permitem)
+music.play().catch(() => {});
+
+// Garante que toca no primeiro toque/clique em qualquer lugar
+function startMusic() {
+  music.play().catch(() => {});
+  document.removeEventListener('click', startMusic);
+  document.removeEventListener('touchstart', startMusic);
+}
+document.addEventListener('click', startMusic);
+document.addEventListener('touchstart', startMusic);
   }
 </script>
 </body>
